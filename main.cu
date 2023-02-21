@@ -29,14 +29,14 @@ int main()
 {
     std::vector< int > x_host = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-    auto x_device = push( x_host );
+    gpu_vector< int > x_device = push( x_host );
     auto f = [] __device__ ( float tmp ) { return tmp * tmp; }; // device lambda function 
     
-    map( f, x_device  
+    map( f, x_device ); 
     
-    auto y = pull( x_device ); // pull results to new host memory array
+    std::vector< int > y = pull( x_device ); // pull results to new host memory array
     
-    for ( auto y_i : y  )
+    for ( int y_i : y  )
         std::cout << y_i << std::endl; // print results
     
     async_vector< int > a = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
